@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-    <el-container style="height: 100%" direction="vertical">
-      <el-header>Header</el-header>
+    <el-container style="height: 100%; width: 100%" direction="vertical">
+      <el-header>
+        <siteheader></siteheader>
+      </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="16%">
           <navcol style="height: 100%"></navcol>
         </el-aside>
-        <el-container>
-          <el-main>This is userpage</el-main>
-          <el-footer>Footer</el-footer>
+        <el-container style="height: 100%; width: 100%">
+          <el-main>
+            <userinfo style="height: 100%; width: 100%"></userinfo>
+          </el-main>
+          <el-footer>
+            <shoppingfooter></shoppingfooter>
+          </el-footer>
         </el-container>
       </el-container>
     </el-container>
@@ -17,9 +23,15 @@
 
 <script>
 import navcol from '../../components/navcol.vue'
+import siteheader from '../../components/siteheader.vue'
+import shoppingfooter from '../../components/shoppingfooter.vue'
+import userinfo from '../../components/userinfo.vue'
 export default {
   components: {
-    navcol
+    navcol,
+    siteheader,
+    shoppingfooter,
+    userinfo
   },
   data() {
     return {
@@ -30,11 +42,6 @@ export default {
 </script>
 
 <style lang="postcss">
-.table-card {
-  width: 1000px;
-  margin-top: 50px auto;
-  text-align: center;
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,11 +59,20 @@ body,
 .el-container {
   padding: 0px;
   margin: 0px;
+  width: 100%;
   height: 100%;
 }
-.el-header, .el-footer {
-  background-color: #B3C0D1;
+.el-header {
+  background-color: #DCDCDC;
   color: #333;
   text-align: center;
+}
+.el-footer {
+  background-color: #F5F5F5;
+  color: #333;
+  text-align: center;
+}
+.siteheader {
+  margin-top: 0.8%;
 }
 </style>

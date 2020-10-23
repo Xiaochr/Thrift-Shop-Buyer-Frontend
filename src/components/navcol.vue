@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="navcol">
     <el-menu :default-active="index" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" 
-    background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+    background-color="#696969" text-color="#fff" active-text-color="#ffd04b">
       <el-menu-item index="0" @click="backHome">
         <i class="el-icon-house"></i>
         <span slot="title">Homepage</span>

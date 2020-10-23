@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-    <el-container style="height: 100%" direction="vertical">
-      <el-header>Header</el-header>
+    <el-container style="height: 100%; width: 100%" direction="vertical">
+      <el-header>
+        <siteheader></siteheader>
+      </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="16%">
           <navcol style="height: 100%"></navcol>
         </el-aside>
-        <el-container>
-          <el-main>This is shopping cart</el-main>
-          <el-footer>Footer</el-footer>
+        <el-container style="height: 100%; width: 100%">
+          <el-main>
+            <cartitems style="height: 100%; width: 100%"></cartitems>
+          </el-main>
+          <el-footer>
+            <cartfooter></cartfooter>
+          </el-footer>
         </el-container>
       </el-container>
     </el-container>
@@ -17,9 +23,17 @@
 
 <script>
 import navcol from '../../components/navcol.vue'
+import bookview from '../../components/bookview.vue'
+import siteheader from '../../components/siteheader.vue'
+import cartfooter from '../../components/cartfooter.vue'
+import cartitems from '../../components/cartitems.vue'
 export default {
   components: {
-    navcol
+    navcol,
+    bookview,
+    siteheader,
+    cartfooter,
+    cartitems
   },
   data() {
     return {
@@ -30,11 +44,6 @@ export default {
 </script>
 
 <style lang="postcss">
-.table-card {
-  width: 1000px;
-  margin-top: 50px auto;
-  text-align: center;
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,11 +61,20 @@ body,
 .el-container {
   padding: 0px;
   margin: 0px;
+  width: 100%;
   height: 100%;
 }
-.el-header, .el-footer {
-  background-color: #B3C0D1;
+.el-header {
+  background-color: #DCDCDC;
   color: #333;
   text-align: center;
+}
+.el-footer {
+  background-color: #F5F5F5;
+  color: #333;
+  text-align: center;
+}
+.siteheader {
+  margin-top: 0.8%;
 }
 </style>

@@ -10,10 +10,10 @@
         </el-aside>
         <el-container style="height: 100%; width: 100%">
           <el-main>
-            <bookview style="height: 100%; width: 100%"></bookview>
+            <bookinfo style="height: 100%; width: 100%"></bookinfo>
           </el-main>
           <el-footer>
-            <shoppingfooter></shoppingfooter>
+            <shoppingfooter style="height: 100%"></shoppingfooter>
           </el-footer>
         </el-container>
       </el-container>
@@ -23,14 +23,14 @@
 
 <script>
 import navcol from '../../components/navcol.vue'
-import bookview from '../../components/bookview.vue'
 import siteheader from '../../components/siteheader.vue'
+import bookinfo from '../../components/bookinfo.vue'
 import shoppingfooter from '../../components/shoppingfooter.vue'
 export default {
   components: {
     navcol,
-    bookview,
     siteheader,
+    bookinfo,
     shoppingfooter
   },
   data() {
@@ -59,8 +59,8 @@ body,
 .el-container {
   padding: 0px;
   margin: 0px;
-  height: 100%;
   width: 100%;
+  height: 100%;
 }
 .el-header {
   background-color: #DCDCDC;
