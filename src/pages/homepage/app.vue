@@ -6,18 +6,32 @@
       </el-header>
       <el-container>
         <el-aside width="16%">
-          <navcol style="height: 100%"></navcol>
+          <navcol style="height: 100%" @cart_listen="open_shopping_cart"></navcol>
         </el-aside>
         <el-container style="height: 100%; width: 100%">
           <el-main>
-            <bookview style="height: 100%; width: 100%"></bookview>
+            <bookview @detail_listen="open_book_detail" style="height: 100%; width: 100%"></bookview>
           </el-main>
           <el-footer>
-            <shoppingfooter></shoppingfooter>
+            <shoppingfooter @cart_listen="open_shopping_cart"></shoppingfooter>
           </el-footer>
         </el-container>
       </el-container>
     </el-container>
+
+    <el-dialog title="Book Detail" :visible="toDetail" @close="toDetail = false">
+      <bookinfo @add_listen="add_to_cart" :entry_id="entry_id" style="height: 100%; width: 100%"></bookinfo>
+    </el-dialog>
+
+    <el-dialog title="Shopping Cart" :visible="toCart" @close="toCart = false">
+      <cartitems style="height: 100%; width: 100%"></cartitems>
+      <cartfooter @order_listen="open_orderpage" @change_listen="update_cart"></cartfooter>
+    </el-dialog>
+
+    <el-dialog title="Order Placement" :visible="toOrder" @close="toOrder = false">
+      <orderitems style="height: 100%; width: 100%"></orderitems>
+      <orderfooter></orderfooter>
+    </el-dialog>
   </div>
 </template>
 
@@ -26,16 +40,49 @@ import navcol from '../../components/navcol.vue'
 import bookview from '../../components/bookview.vue'
 import siteheader from '../../components/siteheader.vue'
 import shoppingfooter from '../../components/shoppingfooter.vue'
+import cartitems from '../../components/cartitems.vue'
+import cartfooter from '../../components/cartfooter.vue'
+import orderfooter from '../../components/orderfooter.vue'
+import orderitems from '../../components/orderitems.vue'
+import bookinfo from '../../components/bookinfo.vue'
 export default {
   components: {
     navcol,
     bookview,
     siteheader,
-    shoppingfooter
+    shoppingfooter,
+    cartitems,
+    cartfooter,
+    orderitems,
+    orderfooter,
+    bookinfo
   },
   data() {
     return {
-      msg: 'Use Vue 2.0 Today!'
+      toCart: false,
+      toOrder: false,
+      toDetail: false,
+      entry_id: 0,
+      cart_items: []
+    }
+  },
+  methods: {
+    open_shopping_cart(message) {
+      this.toCart = message
+    },
+    open_orderpage(message) {
+      this.toOrder = message
+      this.toCart = false
+    },
+    open_book_detail(message, entry_id) {
+      this.toDetail = message
+      this.entry_id = entry_id
+    },
+    add_to_cart(message) {
+      this.cart_items.push(message)
+    },
+    update_cart(message) {
+      this.cart_items = Object.assign([], message)
     }
   }
 }

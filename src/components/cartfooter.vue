@@ -27,14 +27,15 @@ export default {
       location.assign('../homepage.html')
     },
     to_orderpage() {
-      location.assign('../orderpage.html')
+      //location.assign('../orderpage.html')
+      this.$emit("order_listen", true)
     }
   }
 }
 </script>
 
 <style lang="css">
-.shoppingfooter {
+.cartfooter {
   line-height: 100%;
   font-size: 40px;
 }

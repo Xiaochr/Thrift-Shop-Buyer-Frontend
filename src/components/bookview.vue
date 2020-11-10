@@ -48,11 +48,11 @@ export default {
       location.assign('../homepage.html')
     },
     getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.get('http://127.0.0.1:8000/backend/info/').then(
+      this.$http.get('http://124.70.178.153:8083/book').then(
         function(data) {
           console.log(data);
-          this.items = data.body
-          this.curLen = this.items[this.items.length - 1].mID
+          this.items = data.body.book_info
+          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
@@ -66,19 +66,15 @@ export default {
         }
       )
     },
-    editMaterial(row, curIndex) {// 弹出编辑对话框
+    bookDetail(row, curIndex) {
       this.cur_item = row
       //this.orig_item = Object.assign({}, this.cur_item),
-      this.curIndex = curIndex
-      this.$http.post('http://127.0.0.1:8000/backend/info/search/', this.cur_item, {emulateJSON: true}).then(
-        function(data) {
-          console.log(data)
-        }
-      )
-      location.assign('../book_detail.html')
+      //this.curIndex = curIndex
+
+      this.$emit("detail_listen", true, row.entry_id)
     },
     searchName() {// 模糊搜索
-      this.$http.post('http://127.0.0.1:8000/backend/info/search/', {'mName': this.searchContent}, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153/backend/info/search/', {'mName': this.searchContent}, {emulateJSON: true}).then(
         function(data) {
           console.log(data)
           this.items = data.body

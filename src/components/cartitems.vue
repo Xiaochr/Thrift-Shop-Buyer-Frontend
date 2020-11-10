@@ -51,20 +51,9 @@ export default {
         }
       )
     },
-    editMaterial(row, curIndex) {// 弹出编辑对话框
-      this.cur_item = row
-      //this.orig_item = Object.assign({}, this.cur_item),
-      this.curIndex = curIndex
-      this.$http.post('http://127.0.0.1:8000/backend/info/search/', this.cur_item, {emulateJSON: true}).then(
-        function(data) {
-          console.log(data)
-        }
-      )
-      location.assign('../book_detail.html')
+    del_item() {
+      this.items
     },
-    to_shopping_cart() {
-      location.assign('../shopping_cart.html')
-    }
   },
   watch: {
     refreshFlag() {

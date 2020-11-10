@@ -29,7 +29,8 @@ export default {
       location.assign('../homepage.html')
     },
     to_shopping_cart() {
-      location.assign('../shopping_cart.html')
+      //location.assign('../shopping_cart.html')
+      this.$emit("cart_listen", true)
     }
   }
 }

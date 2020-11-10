@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="cartfooter">
+  <div class="orderfooter">
     <el-row>
       <el-col :span="18" style="text-align: right">
         Total: ¥ 100
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="css">
-.shoppingfooter {
+.orderfooter {
   line-height: 100%;
   font-size: 40px;
 }
