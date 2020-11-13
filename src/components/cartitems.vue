@@ -1,14 +1,28 @@
 <template>
   <div class="cartitems">
     <el-card class="table-card">
-      <el-page-header @back="backHome" title=" " content="Shopping Cart"></el-page-header>
-      <el-divider></el-divider>
-      <el-table class="data-table" :data="items" stripe border style="height: 100%">
+      <el-table class="data-table" :data="cart_items" stripe border style="height: 100%">
         <el-table-column prop="name" label="Book name"></el-table-column>
+        <el-table-column prop="author" label="Author"></el-table-column>
         <el-table-column prop="price" label="Price"></el-table-column>
         <el-table-column prop="inventory" label="Unit"></el-table-column>
+        <el-table-column label="Edit">
+          <template slot-scope="scope">
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="delItem(scope.row, scope.$index)">Delete</el-button>
+          </template>
+        </el-table-column>
         
       </el-table>
+
+      <el-row>
+        <el-col :span="18" style="text-align: right">
+          Total: {{total_price}}
+        </el-col>
+        <el-col :span="2"><p> </p></el-col>
+        <el-col :span="4">
+          <el-button type="primary" @click="to_orderpage">Order</el-button>
+        </el-col>
+      </el-row>
       
     </el-card>
     
@@ -18,10 +32,10 @@
 
 <script>
 export default {
+  props: ["cart_items", "total_price"],
   data() {
     return {
-      items: [], //存储要在表格中显示的数据
-      cur_item: {}, //当前的一条记录
+      //total_price: 0,
       curIndex: 1, //当前的index
       curLen: 0, //当前数据数量
       searchContent: '', //存储需要搜索的内容
@@ -32,36 +46,15 @@ export default {
     backHome() {// 返回主页
       location.assign('../homepage.html')
     },
-    getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.get('http://127.0.0.1:8000/backend/info/').then(
-        function(data) {
-          console.log(data);
-          this.items = data.body
-          this.curLen = this.items[this.items.length - 1].mID
-        }
-      )
-      .catch(
-        function(data) {
-          console.log(data)
-          this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
-            duration: 6000
-          })
-        }
-      )
+    
+    delItem(row, curIndex) {
+      this.cart_items.splice(curIndex, 1)
+      this.$emit("price_listen")
     },
-    del_item() {
-      this.items
-    },
-  },
-  watch: {
-    refreshFlag() {
-      this.getItems()
-    },
-  },
-  mounted() {
-    this.getItems()
+    to_orderpage() {
+      //location.assign('../orderpage.html')
+      this.$emit("order_listen", true)
+    }
   }
 }
 </script>

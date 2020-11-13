@@ -2,13 +2,12 @@
   <div class="shoppingfooter">
     <el-row>
       <el-popover placement="top" width="400" trigger="hover">
-        <cartitemsmini></cartitemsmini>
+        <cartitemsmini :cart_items="cart_items" :total_price="total_price"></cartitemsmini>
+
         <el-button slot="reference" type="primary" icon="el-icon-shopping-cart-full" plain @click="to_shopping_cart">Shopping Cart</el-button>
       </el-popover>
       
     </el-row>
-
-    
 
   </div>
 </template>
@@ -19,9 +18,10 @@ export default {
   components: {
     cartitemsmini
   },
+  props: ["cart_items", "total_price"],
   data() {
     return {
-      drawer: false,
+      total_price: 0
     }
   },
   methods: {

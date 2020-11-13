@@ -13,11 +13,13 @@
             <userinfo style="height: 100%; width: 100%"></userinfo>
           </el-main>
           <el-footer>
-            <shoppingfooter></shoppingfooter>
+            
           </el-footer>
         </el-container>
       </el-container>
     </el-container>
+
+    
   </div>
 </template>
 

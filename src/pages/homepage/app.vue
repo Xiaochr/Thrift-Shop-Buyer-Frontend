@@ -13,7 +13,7 @@
             <bookview @detail_listen="open_book_detail" style="height: 100%; width: 100%"></bookview>
           </el-main>
           <el-footer>
-            <shoppingfooter @cart_listen="open_shopping_cart"></shoppingfooter>
+            <shoppingfooter :cart_items="cart_items" :total_price="total_price" @cart_listen="open_shopping_cart" @order_listen="open_orderpage"></shoppingfooter>
           </el-footer>
         </el-container>
       </el-container>
@@ -24,8 +24,7 @@
     </el-dialog>
 
     <el-dialog title="Shopping Cart" :visible="toCart" @close="toCart = false">
-      <cartitems style="height: 100%; width: 100%"></cartitems>
-      <cartfooter @order_listen="open_orderpage" @change_listen="update_cart"></cartfooter>
+      <cartitems :cart_items="cart_items" :total_price="total_price" @order_listen="open_orderpage" @price_listen="calculate_total_price" @change_listen="update_cart" style="height: 100%; width: 100%"></cartitems>
     </el-dialog>
 
     <el-dialog title="Order Placement" :visible="toOrder" @close="toOrder = false">
@@ -63,12 +62,21 @@ export default {
       toOrder: false,
       toDetail: false,
       entry_id: 0,
+      total_price: 0,
       cart_items: []
     }
   },
   methods: {
+    calculate_total_price() {
+      this.total_price = 0
+      for(var i in this.cart_items){
+        this.total_price += (parseFloat(this.cart_items[i].price) * parseFloat(this.cart_items[i].inventory))
+      }
+      
+    },
     open_shopping_cart(message) {
       this.toCart = message
+      this.calculate_total_price()
     },
     open_orderpage(message) {
       this.toOrder = message
@@ -79,11 +87,23 @@ export default {
       this.entry_id = entry_id
     },
     add_to_cart(message) {
+      this.toDetail = false
       this.cart_items.push(message)
+      this.calculate_total_price()
     },
     update_cart(message) {
       this.cart_items = Object.assign([], message)
     }
+  },
+  watch: {
+    refreshFlag() {
+      this.calculate_total_price()
+      console.log(this.total_price)
+    },
+  },
+  mounted() {
+    this.calculate_total_price()
+    console.log(this.total_price)
   }
 }
 </script>

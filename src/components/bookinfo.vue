@@ -9,7 +9,7 @@
       </el-col>
       <el-col :span="14">
         <el-row>Book Name: {{item.name}}</el-row>
-        <el-row>Athor: {{item.author}}</el-row>
+        <el-row>Author: {{item.author}}</el-row>
         <el-row>Category: {{item.category}}</el-row>
         <el-row>Price: {{item.price}}</el-row>
         <el-row>Original Price: {{item.original_price}}</el-row>
@@ -68,7 +68,8 @@ export default {
       )
     },
     add_book() {
-      this.$emit("add_listen", this.cur_item)
+      this.item.inventory = 1
+      this.$emit("add_listen", this.item)
     },
     handleClick(tab, event) {
       console.log(tab, event);
