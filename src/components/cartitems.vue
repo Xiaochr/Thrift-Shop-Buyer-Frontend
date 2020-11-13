@@ -14,6 +14,8 @@
         
       </el-table>
 
+      <el-divider></el-divider>
+
       <el-row>
         <el-col :span="18" style="text-align: right">
           Total: {{total_price}}

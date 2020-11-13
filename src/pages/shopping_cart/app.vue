@@ -13,7 +13,7 @@
             <cartitems style="height: 100%; width: 100%"></cartitems>
           </el-main>
           <el-footer>
-            <cartfooter></cartfooter>
+            
           </el-footer>
         </el-container>
       </el-container>
@@ -25,14 +25,12 @@
 import navcol from '../../components/navcol.vue'
 import bookview from '../../components/bookview.vue'
 import siteheader from '../../components/siteheader.vue'
-import cartfooter from '../../components/cartfooter.vue'
 import cartitems from '../../components/cartitems.vue'
 export default {
   components: {
     navcol,
     bookview,
     siteheader,
-    cartfooter,
     cartitems
   },
   data() {

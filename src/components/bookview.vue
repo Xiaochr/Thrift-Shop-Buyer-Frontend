@@ -48,7 +48,7 @@ export default {
       location.assign('../homepage.html')
     },
     getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.get('http://124.70.178.153:8083/book').then(
+      this.$http.get('http://124.70.178.153:8081/book').then(
         function(data) {
           console.log(data);
           this.items = data.body.book_info
@@ -74,7 +74,7 @@ export default {
       this.$emit("detail_listen", true, row.entry_id)
     },
     searchName() {// 模糊搜索
-      this.$http.post('http://124.70.178.153/backend/info/search/', {'mName': this.searchContent}, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153:8081/search_book', {'book_name': this.searchContent}, {emulateJSON: true}).then(
         function(data) {
           console.log(data)
           this.items = data.body

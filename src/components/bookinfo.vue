@@ -49,7 +49,7 @@ export default {
       location.assign('../homepage.html')
     },
     getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.get('http://124.70.178.153:8083/book/'+this.entry_id.toString()).then(
+      this.$http.get('http://124.70.178.153:8081/book/'+this.entry_id.toString()).then(
         function(data) {
           console.log(data);
           this.item = data.body

@@ -2,7 +2,7 @@
   <div class="shoppingfooter">
     <el-row>
       <el-popover placement="top" width="400" trigger="hover">
-        <cartitemsmini :cart_items="cart_items" :total_price="total_price"></cartitemsmini>
+        <cartitemsmini :cart_items="cart_items" :total_price="total_price" @order_listen="to_orderpage"></cartitemsmini>
 
         <el-button slot="reference" type="primary" icon="el-icon-shopping-cart-full" plain @click="to_shopping_cart">Shopping Cart</el-button>
       </el-popover>
@@ -21,7 +21,7 @@ export default {
   props: ["cart_items", "total_price"],
   data() {
     return {
-      total_price: 0
+      
     }
   },
   methods: {
@@ -31,6 +31,9 @@ export default {
     to_shopping_cart() {
       //location.assign('../shopping_cart.html')
       this.$emit("cart_listen", true)
+    },
+    to_orderpage() {
+      this.$emit("order_listen", true)
     }
   }
 }

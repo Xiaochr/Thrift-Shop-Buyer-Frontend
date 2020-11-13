@@ -28,8 +28,8 @@
     </el-dialog>
 
     <el-dialog title="Order Placement" :visible="toOrder" @close="toOrder = false">
-      <orderitems style="height: 100%; width: 100%"></orderitems>
-      <orderfooter></orderfooter>
+      <orderitems :cart_items="cart_items" :total_price="total_price" :user_item="user_item" :order_id="order_id" :postage="postage" @cancel_order_listen="cancel_order" style="height: 100%; width: 100%"></orderitems>
+      
     </el-dialog>
   </div>
 </template>
@@ -40,7 +40,6 @@ import bookview from '../../components/bookview.vue'
 import siteheader from '../../components/siteheader.vue'
 import shoppingfooter from '../../components/shoppingfooter.vue'
 import cartitems from '../../components/cartitems.vue'
-import cartfooter from '../../components/cartfooter.vue'
 import orderfooter from '../../components/orderfooter.vue'
 import orderitems from '../../components/orderitems.vue'
 import bookinfo from '../../components/bookinfo.vue'
@@ -51,7 +50,6 @@ export default {
     siteheader,
     shoppingfooter,
     cartitems,
-    cartfooter,
     orderitems,
     orderfooter,
     bookinfo
@@ -63,7 +61,10 @@ export default {
       toDetail: false,
       entry_id: 0,
       total_price: 0,
-      cart_items: []
+      cart_items: [],
+      user_item: {},
+      order_id: 0,
+      postage: 0
     }
   },
   methods: {
@@ -72,15 +73,67 @@ export default {
       for(var i in this.cart_items){
         this.total_price += (parseFloat(this.cart_items[i].price) * parseFloat(this.cart_items[i].inventory))
       }
-      
+    },
+    getUserInfo() {
+      this.$http.post('http://124.70.178.153:8081/user_info', {'user_id': 1}, {emulateJSON: true}).then(
+        function(data) {
+          console.log(data);
+          this.user_item = data.body
+          //this.curLen = this.items[this.items.length - 1].mID
+        }
+      )
+      .catch(
+        function(data) {
+          console.log(data)
+          this.$notify({
+            title: '错误',
+            message: '获取数据失败！',
+            duration: 6000
+          })
+        }
+      )
     },
     open_shopping_cart(message) {
       this.toCart = message
       this.calculate_total_price()
     },
     open_orderpage(message) {
-      this.toOrder = message
-      this.toCart = false
+      if(this.cart_items.length){
+        this.toOrder = message
+        this.$http.post('http://124.70.178.153:8081/order_book', {"customer_id": 1, "order_detail": this.cart_items}).then(
+          function(data) {
+            console.log(data);
+            this.success = data.success
+            this.order_id = data.order_id
+            this.postage = data.postage
+            
+            this.$notify({
+              title: 'Success',
+              message: "Successfully placed the order",
+              duration: 6000
+            })
+          }
+        )
+        .catch(
+          function(data) {
+            console.log(data)
+            this.$notify({
+              title: 'Failed',
+              message: "Fail to order",
+              duration: 6000
+            })
+          }
+        )
+        this.toCart = false
+      }
+      else {
+        this.$notify({
+          title: 'Warning',
+          message: "Empty shopping cart",
+          duration: 6000
+        })
+      }
+      
     },
     open_book_detail(message, entry_id) {
       this.toDetail = message
@@ -93,17 +146,20 @@ export default {
     },
     update_cart(message) {
       this.cart_items = Object.assign([], message)
+    },
+    cancel_order(message) {
+      this.toOrder = false
     }
   },
   watch: {
     refreshFlag() {
       this.calculate_total_price()
-      console.log(this.total_price)
+      this.getUserInfo()
     },
   },
   mounted() {
     this.calculate_total_price()
-    console.log(this.total_price)
+    this.getUserInfo()
   }
 }
 </script>

@@ -46,71 +46,79 @@
 
     <el-dialog title="Edit User Info" :visible="editVisible" @close="closeEdit">
       <el-form>
-      <el-row>
-        <el-col :span="10">
-          <div class="block">
-            <img src="../assets/logo.png">
-          </div>
-        </el-col>
-        <el-col :span="14">
-          <el-row>
+        <el-row>
+          <el-col :span="8">
             <el-form-item label="User name">
               <el-input type="text" v-model="user_item.user_name" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+          <el-col :span="7"><el-form-item></el-form-item></el-col>
+          <el-col :span="8">
             <el-form-item label="Password">
               <el-input type="text" v-model="user_item.password" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+        </el-row>
+        
+        <el-row>
+          <el-col :span="8">
             <el-form-item label="Real name">
               <el-input type="text" v-model="user_item.real_name" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+          <el-col :span="1"><el-form-item></el-form-item></el-col>
+          <el-col :span="7">
             <el-form-item label="Age">
               <el-input type="text" v-model="user_item.age" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+          <el-col :span="1"><el-form-item></el-form-item></el-col>
+          <el-col :span="7">
             <el-form-item label="Gender">
               <el-input type="text" v-model="user_item.sex" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+        </el-row>
+        
+        <el-row>
+          <el-col :span="8">
             <el-form-item label="Certification type">
               <el-input type="text" v-model="user_item.certificationType" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+          <el-col :span="7"><el-form-item></el-form-item></el-col>
+          <el-col :span="8">
             <el-form-item label="Certification number">
               <el-input type="text" v-model="user_item.certificationNumber" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
-            <el-form-item label="Address">
-              <el-input type="text" v-model="user_item.address" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
-            </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-form-item label="Address">
+            <el-input type="text" v-model="user_item.address" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
+          </el-form-item>
+        </el-row>
+
+        <el-row>
+          <el-col :span="8">
             <el-form-item label="Telephone">
               <el-input type="text" v-model="user_item.telephone" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
+          </el-col>
+          <el-col :span="7"><el-form-item></el-form-item></el-col>
+          <el-col :span="8">
             <el-form-item label="Account">
               <el-input type="text" v-model="user_item.account" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
-          </el-row>
+          </el-col>
+        </el-row>
 
-        </el-col>
-      </el-row>
       </el-form>
       <span slot="footer">
-        <el-button type="success" @click="editUserInfo()">Save</el-button>
-        <el-button type="primary" @click="resetUserInfo()">Reset</el-button>
-        <el-button type="primary" @click="closeEdit()">Cancel</el-button>
+        <el-button type="success" plain @click="editUserInfo()">Save</el-button>
+        <el-button type="primary" plain @click="resetUserInfo()">Reset</el-button>
+        <el-button type="primary" plain @click="closeEdit()">Cancel</el-button>
       </span>
     </el-dialog>
   </div>
@@ -136,7 +144,7 @@ export default {
       location.assign('../homepage.html')
     },
     getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.post('http://124.70.178.153:8083/user_info', {'user_id': 1}, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153:8081/user_info', {'user_id': 1}, {emulateJSON: true}).then(
         function(data) {
           console.log(data);
           this.user_item = data.body
@@ -155,7 +163,7 @@ export default {
       )
     },
     getOrders() {
-      this.$http.post('http://124.70.178.153:8083/user_order_' + this.active_name, {'user_id': 1}, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153:8081/user_order_' + this.active_name, {'user_id': 1}, {emulateJSON: true}).then(
         function(data) {
           console.log(data);
           this.user_order = data.body
@@ -185,7 +193,7 @@ export default {
       this.user_item = Object.assign({}, this.orig_item)
     },
     editUserInfo() {
-      this.$http.post('http://124.70.178.153:8083/edit_user_info', this.user_item, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153:8081/edit_user_info', this.user_item, {emulateJSON: true}).then(
         function(data) {
           console.log(data);
           this.user_order = data.body
