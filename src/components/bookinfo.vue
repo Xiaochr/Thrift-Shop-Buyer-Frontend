@@ -4,15 +4,15 @@
       <el-row>
       <el-col :span="10">
         <div class="block">
-          <img src="../assets/logo.png">
+          <img :src="'data:image/png;base64,' + book_info.image">
         </div>
       </el-col>
       <el-col :span="14">
-        <el-row>Book Name: {{item.name}}</el-row>
-        <el-row>Author: {{item.author}}</el-row>
-        <el-row>Category: {{item.category}}</el-row>
-        <el-row>Price: {{item.price}}</el-row>
-        <el-row>Original Price: {{item.original_price}}</el-row>
+        <el-row>Book Name: {{book_info.name}}</el-row>
+        <el-row>Author: {{book_info.author}}</el-row>
+        <el-row>Category: {{book_info.category}}</el-row>
+        <el-row>Price: {{book_info.price}}</el-row>
+        <el-row>Original Price: {{book_info.original_price}}</el-row>
         <el-row>
           <el-button type="primary" icon="el-icon-shopping-cart" @click="add_book">Add to Cart</el-button>
         </el-row>
@@ -21,8 +21,8 @@
       
       <el-card>
         <el-tabs v-model="active_name" @tab-click="handleClick">
-          <el-tab-pane label="Book Detail" name="detail">{{item.description}}</el-tab-pane>
-          <el-tab-pane label="User Comments" name="comment">{{item.entry_comment}}</el-tab-pane>
+          <el-tab-pane label="Book Detail" name="detail">{{book_info.description}}</el-tab-pane>
+          <el-tab-pane label="User Comments" name="comment">{{book_info.entry_comment}}</el-tab-pane>
         </el-tabs>
       </el-card>
 
@@ -33,10 +33,9 @@
 
 <script>
 export default {
-  props: ["entry_id"],
+  props: ["book_info"],
   data() {
     return {
-      item: {}, //当前的一条记录
       active_name: "detail",
       curIndex: 1, //当前的index
       curLen: 0, //当前数据数量
@@ -48,28 +47,9 @@ export default {
     backHome() {// 返回主页
       location.assign('../homepage.html')
     },
-    getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.get('http://124.70.178.153:8081/book/'+this.entry_id.toString()).then(
-        function(data) {
-          console.log(data);
-          this.item = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
-        }
-      )
-      .catch(
-        function(data) {
-          console.log(data)
-          this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
-            duration: 6000
-          })
-        }
-      )
-    },
     add_book() {
-      this.item.inventory = 1
-      this.$emit("add_listen", this.item)
+      this.book_info.inventory = 1
+      this.$emit("add_listen", this.book_info)
     },
     handleClick(tab, event) {
       console.log(tab, event);

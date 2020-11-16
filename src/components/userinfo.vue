@@ -1,55 +1,69 @@
 <template>
   <div class="bookview">
-    <el-card class="table-card">
-      <el-page-header @back="backHome" title=" " content="Userpage"></el-page-header>
-      <el-divider></el-divider>
+    
+    <el-page-header @back="backHome" title=" " content="Userpage"></el-page-header>
+    <el-divider></el-divider>
+    <el-row>
+    <el-col :span="10">
+      <div class="block">
+        <el-upload
+          class="avatar-uploader"
+          action=""
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="user_item.avatar" :src="user_item.avatar" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        
+      </div>
+    </el-col>
+    <el-col :span="14">
+      <el-row>User Name: {{user_item.username}}</el-row>
+      <el-row>Real Name: {{user_item.real_name}}</el-row>
+      <el-row>Age: {{user_item.age}}</el-row>
+      <el-row>Gender: {{user_item.sex}}</el-row>
+      <el-row>Telephone: {{user_item.telephone}}</el-row>
+      <el-row>Certification Type: {{user_item.certificationType}}</el-row>
+      <el-row>Certification Number: {{user_item.certificationNumber}}</el-row>
+      <el-row>Address: {{user_item.address}}</el-row>
       <el-row>
-      <el-col :span="10">
-        <div class="block">
-          <img src="../assets/logo.png">
-        </div>
-      </el-col>
-      <el-col :span="14">
-        <el-row>User Name</el-row>
-        <el-row>Real Name</el-row>
-        <el-row>Age</el-row>
-        <el-row>Gender</el-row>
-        <el-row>Certification Type</el-row>
-        <el-row>Address</el-row>
-        <el-row>
-          <el-button type="primary" icon="el-icon-edit" @click="openEdit">Edit Personal Info</el-button>
-        </el-row>
-      </el-col>
+        <el-button type="primary" icon="el-icon-edit" @click="openEdit">Edit Personal Info</el-button>
       </el-row>
-      
-      <el-card>
-        <span>Orders</span>
-        <el-divider></el-divider>
-        <el-tabs v-model="active_name" @tab-click="handleClick">
-          <el-tab-pane label="All Orders" name="all">
-            <el-table class="data-table" :data="user_order" stripe border style="height: 100%">
-              <el-table-column prop="name" label="Order ID"></el-table-column>
-              <el-table-column prop="name" label="Book name"></el-table-column>
-              <el-table-column prop="inventory" label="Inventory"></el-table-column>
-              <el-table-column prop="price" label="Price"></el-table-column>
-              <el-table-column prop="price" label="Order State"></el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <el-tab-pane label="Orders to be Delivered" name="deliver">Comments</el-tab-pane>
-          <el-tab-pane label="Orders in Transportation" name="transport">Comments</el-tab-pane>
-          <el-tab-pane label="Orders to be Commented" name="comment">Comments</el-tab-pane>
-          <el-tab-pane label="Finished Orders" name="finish">Comments</el-tab-pane>
-        </el-tabs>
-      </el-card>
-
+    </el-col>
+    </el-row>
+    
+    <el-card>
+      <span>Orders</span>
+      <el-divider></el-divider>
+      <el-tabs v-model="active_name" @tab-click="handleClick">
+        <el-tab-pane label="All Orders" name="all">
+          <el-table class="data-table" :data="user_order" stripe border style="height: 100%">
+            <el-table-column prop="order_id" label="Order ID"></el-table-column>
+            <el-table-column prop="order_time" label="Order Time"></el-table-column>
+            <el-table-column prop="postageFee" label="Postage Fee"></el-table-column>
+            <el-table-column label="Detail">
+              <template slot-scope="scope">
+                <el-button type="primary" size="mini" @click="orderDetail(scope.row)">Detail</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="Orders to be Delivered" name="deliver">Comments</el-tab-pane>
+        <el-tab-pane label="Orders in Transportation" name="transport">Comments</el-tab-pane>
+        <el-tab-pane label="Orders to be Commented" name="comment">Comments</el-tab-pane>
+        <el-tab-pane label="Finished Orders" name="finish">Comments</el-tab-pane>
+      </el-tabs>
     </el-card>
+
+    
 
     <el-dialog title="Edit User Info" :visible="editVisible" @close="closeEdit">
       <el-form>
         <el-row>
           <el-col :span="8">
             <el-form-item label="User name">
-              <el-input type="text" v-model="user_item.user_name" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
+              <el-input type="text" v-model="user_item.username" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="7"><el-form-item></el-form-item></el-col>
@@ -108,9 +122,7 @@
           </el-col>
           <el-col :span="7"><el-form-item></el-form-item></el-col>
           <el-col :span="8">
-            <el-form-item label="Account">
-              <el-input type="text" v-model="user_item.account" placeholder="" oninput="if(value.length>10) value=value.slice(0,10)"></el-input>
-            </el-form-item>
+            <el-form-item></el-form-item>
           </el-col>
         </el-row>
 
@@ -119,6 +131,22 @@
         <el-button type="success" plain @click="editUserInfo()">Save</el-button>
         <el-button type="primary" plain @click="resetUserInfo()">Reset</el-button>
         <el-button type="primary" plain @click="closeEdit()">Cancel</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog title="Order Detail" :visible="detailVisible" @close="detailVisible = false">
+      <el-table class="data-table" :data="user_order" stripe border style="height: 100%">
+        <el-table-column prop="order_id" label="Order ID"></el-table-column>
+        <el-table-column prop="entry_id" label="Book ID"></el-table-column>
+        <el-table-column prop="order_id" label="Book Name"></el-table-column>
+        <el-table-column prop="number" label="Number"></el-table-column>
+        <el-table-column prop="seller_id" label="Seller ID"></el-table-column>
+        <el-table-column prop="postageFee" label="Postage Fee"></el-table-column>
+        <el-table-column prop="status" label="Status"></el-table-column>
+      </el-table>
+      <span slot="footer">
+        <el-button type="success" plain @click="confirmArrival">Confirm Arrival</el-button>
+        <el-button type="primary" plain @click="detailVisible = false">Close</el-button>
       </span>
     </el-dialog>
   </div>
@@ -131,8 +159,10 @@ export default {
       user_item: {}, 
       user_order: [],
       orig_item: {},
+      order_detail: [],
       active_name: "all",
       editVisible: false,
+      detailVisible: false,
       curIndex: 1, //当前的index
       curLen: 0, //当前数据数量
       searchContent: '', //存储需要搜索的内容
@@ -144,7 +174,9 @@ export default {
       location.assign('../homepage.html')
     },
     getItems() {// 向后台发送请求，获取所有原料信息
-      this.$http.post('http://124.70.178.153:8081/user_info', {'user_id': 1}, {emulateJSON: true}).then(
+      var id_dict = {'user_id': 1}
+      console.log(id_dict)
+      this.$http.post('http://124.70.178.153:8085/user_info', id_dict).then(
         function(data) {
           console.log(data);
           this.user_item = data.body
@@ -163,7 +195,9 @@ export default {
       )
     },
     getOrders() {
-      this.$http.post('http://124.70.178.153:8081/user_order_' + this.active_name, {'user_id': 1}, {emulateJSON: true}).then(
+      var id_dict = {'user_id': 1}
+      console.log(id_dict)
+      this.$http.post('http://124.70.178.153:8085/user_order_' + this.active_name, id_dict).then(
         function(data) {
           console.log(data);
           this.user_order = data.body
@@ -193,12 +227,75 @@ export default {
       this.user_item = Object.assign({}, this.orig_item)
     },
     editUserInfo() {
-      this.$http.post('http://124.70.178.153:8081/edit_user_info', this.user_item, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153:8085/edit_user_info', this.user_item).then(
         function(data) {
           console.log(data);
-          this.user_order = data.body
           this.refreshFlag ++
           this.editVisible = false
+          //this.curLen = this.items[this.items.length - 1].mID
+        }
+      )
+      .catch(
+        function(data) {
+          console.log(data)
+          this.$notify({
+            title: '错误',
+            message: '获取数据失败！',
+            duration: 6000
+          })
+        }
+      )
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('Only JPG format!');
+      }
+      if (!isLt2M) {
+        this.$message.error('Not more than 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    handleAvatarSuccess(res, file) {
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        console.log(reader.result)
+        this.user_item.avatar = reader.result
+
+      }
+      reader.onerror = function (error) {
+        console.log('Error: ', error)
+      }
+    },
+    orderDetail(row) {
+      this.detailVisible = true
+      this.$http.get('http://124.70.178.153:8085/user_order_detail/'+row.order_id.toString()).then(
+        function(data) {
+          console.log(data);
+          this.order_detail = data.body
+          //this.curLen = this.items[this.items.length - 1].mID
+        }
+      )
+      .catch(
+        function(data) {
+          console.log(data)
+          this.$notify({
+            title: '错误',
+            message: '获取数据失败！',
+            duration: 6000
+          })
+        }
+      )
+    },
+    confirmArrival() {
+      this.detailVisible = false
+      this.$http.post('http://124.70.178.153:8085/confirm_receive', this.order_detail).then(
+        function(data) {
+          console.log(data);
+          this.order_detail = data.body
           //this.curLen = this.items[this.items.length - 1].mID
         }
       )

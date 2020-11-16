@@ -1,32 +1,32 @@
 <template>
   <div class="bookview">
-    <el-card class="table-card">
-      <el-page-header @back="backHome" title=" " content="Book Overview"></el-page-header>
-      <el-divider></el-divider>
-      <el-row>
-        <el-col :span="16">
-          <el-input v-model="searchContent" @keyup.enter.native="searchName()" placeholder="Search book name"></el-input>
-        </el-col>
-        <el-col :span="1"><p> </p></el-col>
-        <el-col :span="3">
-          <el-button type="primary" icon="el-icon-search" plain @click="searchName()">Search</el-button>
-        </el-col>
-        <el-col :span="4"><p> </p></el-col>
-      </el-row>
-      <el-table class="data-table" :data="items" stripe border style="height: 100%">
-        <el-table-column prop="name" label="Book name"></el-table-column>
-        <el-table-column prop="author" label="Author"></el-table-column>
-        <el-table-column prop="category" label="Category"></el-table-column>
-        <el-table-column prop="original_price" label="Original price"></el-table-column>
-        <el-table-column prop="price" label="Price"></el-table-column>
-        <el-table-column prop="inventory" label="Inventory"></el-table-column>
-        <el-table-column label="Book detail">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="bookDetail(scope.row, scope.$index)">Detail</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
+    
+    <el-page-header @back="backHome" title=" " content="Book Overview"></el-page-header>
+    <el-divider></el-divider>
+    <el-row>
+      <el-col :span="16">
+        <el-input v-model="searchContent" @keyup.enter.native="searchName()" placeholder="Search book name"></el-input>
+      </el-col>
+      <el-col :span="1"><p> </p></el-col>
+      <el-col :span="3">
+        <el-button type="primary" icon="el-icon-search" plain @click="searchName()">Search</el-button>
+      </el-col>
+      <el-col :span="4"><p> </p></el-col>
+    </el-row>
+    <el-table class="data-table" :data="items" stripe border style="height: 100%">
+      <el-table-column prop="name" label="Book name"></el-table-column>
+      <el-table-column prop="author" label="Author"></el-table-column>
+      <el-table-column prop="category" label="Category"></el-table-column>
+      <el-table-column prop="original_price" label="Original price"></el-table-column>
+      <el-table-column prop="price" label="Price"></el-table-column>
+      <el-table-column prop="inventory" label="Inventory"></el-table-column>
+      <el-table-column label="Book detail">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click="bookDetail(scope.row, scope.$index)">Detail</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    
 
   </div>
 </template>

@@ -20,7 +20,7 @@
     </el-container>
 
     <el-dialog title="Book Detail" :visible="toDetail" @close="toDetail = false">
-      <bookinfo @add_listen="add_to_cart" :entry_id="entry_id" style="height: 100%; width: 100%"></bookinfo>
+      <bookinfo @add_listen="add_to_cart" :book_info="book_info" style="height: 100%; width: 100%"></bookinfo>
     </el-dialog>
 
     <el-dialog title="Shopping Cart" :visible="toCart" @close="toCart = false">
@@ -63,6 +63,7 @@ export default {
       total_price: 0,
       cart_items: [],
       user_item: {},
+      book_info: {},
       order_id: 0,
       postage: 0
     }
@@ -75,7 +76,7 @@ export default {
       }
     },
     getUserInfo() {
-      this.$http.post('http://124.70.178.153:8081/user_info', {'user_id': 1}, {emulateJSON: true}).then(
+      this.$http.post('http://124.70.178.153:8085/user_info', {'user_id': 1}).then(
         function(data) {
           console.log(data);
           this.user_item = data.body
@@ -137,7 +138,24 @@ export default {
     },
     open_book_detail(message, entry_id) {
       this.toDetail = message
-      this.entry_id = entry_id
+      //this.entry_id = entry_id
+      this.$http.get('http://124.70.178.153:8081/book/'+entry_id.toString()).then(
+        function(data) {
+          console.log(data);
+          this.book_info = data.body
+          //this.curLen = this.items[this.items.length - 1].mID
+        }
+      )
+      .catch(
+        function(data) {
+          console.log(data)
+          this.$notify({
+            title: '错误',
+            message: '获取数据失败！',
+            duration: 6000
+          })
+        }
+      )
     },
     add_to_cart(message) {
       this.toDetail = false
