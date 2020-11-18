@@ -6,16 +6,7 @@
     <el-row>
     <el-col :span="10">
       <div class="block">
-        <el-upload
-          class="avatar-uploader"
-          action=""
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="user_item.avatar" :src="user_item.avatar" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        
+        <img :src="user_item.avatar">
       </div>
     </el-col>
     <el-col :span="14">
@@ -163,32 +154,28 @@ export default {
       active_name: "all",
       editVisible: false,
       detailVisible: false,
-      curIndex: 1, //当前的index
-      curLen: 0, //当前数据数量
-      searchContent: '', //存储需要搜索的内容
-      refreshFlag: 0 //是否刷新页面
+      refreshFlag: 0 
     }
   },
   methods: {
-    backHome() {// 返回主页
+    backHome() {
       location.assign('../homepage.html')
     },
-    getItems() {// 向后台发送请求，获取所有原料信息
+    getItems() {
       var id_dict = {'user_id': 1}
       console.log(id_dict)
       this.$http.post('http://124.70.178.153:8085/user_info', id_dict).then(
         function(data) {
           console.log(data);
           this.user_item = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to get data!',
             duration: 6000
           })
         }
@@ -201,15 +188,14 @@ export default {
         function(data) {
           console.log(data);
           this.user_order = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to get data!',
             duration: 6000
           })
         }
@@ -232,43 +218,18 @@ export default {
           console.log(data);
           this.refreshFlag ++
           this.editVisible = false
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to save data!',
             duration: 6000
           })
         }
       )
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('Only JPG format!');
-      }
-      if (!isLt2M) {
-        this.$message.error('Not more than 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
-    handleAvatarSuccess(res, file) {
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        console.log(reader.result)
-        this.user_item.avatar = reader.result
-
-      }
-      reader.onerror = function (error) {
-        console.log('Error: ', error)
-      }
     },
     orderDetail(row) {
       this.detailVisible = true
@@ -276,15 +237,14 @@ export default {
         function(data) {
           console.log(data);
           this.order_detail = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to get data!',
             duration: 6000
           })
         }
@@ -296,15 +256,14 @@ export default {
         function(data) {
           console.log(data);
           this.order_detail = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to confirm arrival!',
             duration: 6000
           })
         }

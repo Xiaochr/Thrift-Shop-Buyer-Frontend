@@ -80,15 +80,14 @@ export default {
         function(data) {
           console.log(data);
           this.user_item = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to get data!',
             duration: 6000
           })
         }
@@ -138,20 +137,18 @@ export default {
     },
     open_book_detail(message, entry_id) {
       this.toDetail = message
-      //this.entry_id = entry_id
       this.$http.get('http://124.70.178.153:8081/book/'+entry_id.toString()).then(
         function(data) {
           console.log(data);
           this.book_info = data.body
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Fail to get data!',
             duration: 6000
           })
         }

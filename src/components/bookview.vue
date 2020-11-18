@@ -1,6 +1,5 @@
 <template>
   <div class="bookview">
-    
     <el-page-header @back="backHome" title=" " content="Book Overview"></el-page-header>
     <el-divider></el-divider>
     <el-row>
@@ -26,8 +25,6 @@
         </template>
       </el-table-column>
     </el-table>
-    
-
   </div>
 </template>
 
@@ -35,32 +32,29 @@
 export default {
   data() {
     return {
-      items: [], //存储要在表格中显示的数据
-      cur_item: {}, //当前的一条记录
-      curIndex: 1, //当前的index
-      curLen: 0, //当前数据数量
-      searchContent: '', //存储需要搜索的内容
-      refreshFlag: 0 //是否刷新页面
+      items: [], 
+      cur_item: {}, 
+      searchContent: '', 
+      refreshFlag: 0 
     }
   },
   methods: {
-    backHome() {// 返回主页
+    backHome() {
       location.assign('../homepage.html')
     },
-    getItems() {// 向后台发送请求，获取所有原料信息
+    getItems() {
       this.$http.get('http://124.70.178.153:8081/book').then(
         function(data) {
           console.log(data);
           this.items = data.body.book_info
-          //this.curLen = this.items[this.items.length - 1].mID
         }
       )
       .catch(
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '获取数据失败！',
+            title: 'Error',
+            message: 'Failed to get data',
             duration: 6000
           })
         }
@@ -68,12 +62,9 @@ export default {
     },
     bookDetail(row, curIndex) {
       this.cur_item = row
-      //this.orig_item = Object.assign({}, this.cur_item),
-      //this.curIndex = curIndex
-
       this.$emit("detail_listen", true, row.entry_id)
     },
-    searchName() {// 模糊搜索
+    searchName() {
       this.$http.post('http://124.70.178.153:8081/search_book', {'book_name': this.searchContent}, {emulateJSON: true}).then(
         function(data) {
           console.log(data)
@@ -84,8 +75,8 @@ export default {
         function(data) {
           console.log(data)
           this.$notify({
-            title: '错误',
-            message: '搜索失败！',
+            title: 'Error',
+            message: 'Failed to search',
             duration: 6000
           })
         }

@@ -25,9 +25,7 @@
           <el-tab-pane label="User Comments" name="comment">{{book_info.entry_comment}}</el-tab-pane>
         </el-tabs>
       </el-card>
-
     </el-card>
-
   </div>
 </template>
 
@@ -37,14 +35,11 @@ export default {
   data() {
     return {
       active_name: "detail",
-      curIndex: 1, //当前的index
-      curLen: 0, //当前数据数量
-      searchContent: '', //存储需要搜索的内容
-      refreshFlag: 0 //是否刷新页面
+      refreshFlag: 0 
     }
   },
   methods: {
-    backHome() {// 返回主页
+    backHome() {
       location.assign('../homepage.html')
     },
     add_book() {

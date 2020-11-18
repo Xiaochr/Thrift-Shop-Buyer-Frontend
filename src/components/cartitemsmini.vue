@@ -6,9 +6,9 @@
         <el-table-column prop="author" label="Author"></el-table-column>
         <el-table-column prop="price" label="Price"></el-table-column>
         <el-table-column prop="inventory" label="Unit"></el-table-column>
-        
       </el-table>
       <el-divider></el-divider>
+
       <el-row>
         <el-col :span="16">
           Total: {{total_price}}
@@ -19,7 +19,6 @@
         </el-col>
       </el-row>
     </el-card>
-    
   </div>
 </template>
 
@@ -28,15 +27,11 @@ export default {
   props: ["cart_items", "total_price"],
   data() {
     return {
-      curIndex: 1, //当前的index
-      curLen: 0, //当前数据数量
-      searchContent: '', //存储需要搜索的内容
-      refreshFlag: 0 //是否刷新页面
+      
     }
   },
   methods: {
     to_orderpage() {
-      //location.assign('../orderpage.html')
       this.$emit("order_listen", true)
     }
   },

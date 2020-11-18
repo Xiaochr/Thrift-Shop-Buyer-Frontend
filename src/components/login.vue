@@ -14,7 +14,6 @@
       </el-form>
       <el-button type="primary" plain @click="backHome">Login</el-button>
     </el-card>
-
   </div>
 </template>
 
@@ -28,7 +27,7 @@ export default {
     }
   },
   methods: {
-    login() {// 登录
+    login() {
       this.$http.post('http://127.0.0.1:8000/backend/login/', {'id': this.id, 'pswd': this.pswd}, {emulateJSON: true}).then(
         function(data) {
           console.log(data)
@@ -46,7 +45,7 @@ export default {
         })
       }
     },
-    backHome() {// 为方便调试设置的假登录函数
+    backHome() {
       location.assign('../homepage.html')
     }
   }

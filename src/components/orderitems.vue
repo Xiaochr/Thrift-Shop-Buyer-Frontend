@@ -27,16 +27,14 @@
             <el-button type="primary" icon="el-icon-edit" @click="change_address">Change Address</el-button>
           </el-col>
         </el-row>
-        
       </el-card>
       <el-divider></el-divider>
+
       <el-table class="data-table" :data="cart_items" stripe border style="height: 100%">
         <el-table-column prop="name" label="Book name"></el-table-column>
         <el-table-column prop="price" label="Price"></el-table-column>
         <el-table-column prop="inventory" label="Unit"></el-table-column>
-        
       </el-table>
-      
     </el-card>
 
     <orderfooter :cart_items="cart_items" :total_price="total_price" :user_item="user_item" :postage="postage" :order_id="order_id" @cancel_order_listen="cancel_order"></orderfooter>
@@ -69,8 +67,6 @@
         <el-button type="primary" plain @click="close_change">Cancel</el-button>
       </span>
     </el-dialog>
-
-
   </div>
 </template>
 
@@ -83,12 +79,10 @@ export default {
   props: ["cart_items", "total_price", "user_item", "order_id", "postage"],
   data() {
     return {
-      items: [], //存储要在表格中显示的数据
+      items: [], 
       origin_info: {},
-      curIndex: 1, //当前的index
-      curLen: 0, //当前数据数量
       chVisible: false,
-      refreshFlag: 0 //是否刷新页面
+      refreshFlag: 0 
     }
   },
   methods: {
@@ -98,6 +92,7 @@ export default {
     },
     save_change() {
       this.chVisible = false
+      // save changed address
     },
     close_change() {
       this.info = Object.assign({}, this.origin_info)

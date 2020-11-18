@@ -11,9 +11,7 @@
             <el-button type="danger" size="mini" icon="el-icon-delete" @click="delItem(scope.row, scope.$index)">Delete</el-button>
           </template>
         </el-table-column>
-        
       </el-table>
-
       <el-divider></el-divider>
 
       <el-row>
@@ -25,10 +23,7 @@
           <el-button type="primary" @click="to_orderpage">Order</el-button>
         </el-col>
       </el-row>
-      
     </el-card>
-    
-
   </div>
 </template>
 
@@ -37,24 +32,18 @@ export default {
   props: ["cart_items", "total_price"],
   data() {
     return {
-      //total_price: 0,
-      curIndex: 1, //当前的index
-      curLen: 0, //当前数据数量
-      searchContent: '', //存储需要搜索的内容
-      refreshFlag: 0 //是否刷新页面
+      
     }
   },
   methods: {
-    backHome() {// 返回主页
+    backHome() {
       location.assign('../homepage.html')
     },
-    
     delItem(row, curIndex) {
       this.cart_items.splice(curIndex, 1)
       this.$emit("price_listen")
     },
     to_orderpage() {
-      //location.assign('../orderpage.html')
       this.$emit("order_listen", true)
     }
   }

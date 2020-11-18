@@ -24,9 +24,6 @@
         <el-button type="danger" @click="cancelOrder">Cancel</el-button>
       </el-col>
     </el-row>
-
-    
-
   </div>
 </template>
 
@@ -72,7 +69,6 @@ export default {
           })
         }
       )
-      //this.backHome()
     },
     cancelOrder() {
       console.log(this.cart_items)
